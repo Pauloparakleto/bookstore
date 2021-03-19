@@ -1,0 +1,17 @@
+<div class='container'>
+  <% @books.each do |book| %>
+    <div class='row'>
+      <div class='col s4'>
+        Title: <%= book.title %>
+      </div>
+
+      <div class='col s4'>
+        Price: <%= book.price %>
+      </div>
+
+      <div class='col s4'>
+        Authors: <%= book.authors %>
+      </div>
+    </div>
+  <% end %>
+</div>
