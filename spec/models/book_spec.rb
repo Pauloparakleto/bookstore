@@ -8,6 +8,24 @@ RSpec.describe Book, type: :model do
                            quantity: 27)
   }
 
+  describe 'validations' do
+    subject { book }
+
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:price) }
+    it { is_expected.to validate_presence_of(:quantity) }
+  end
+
+  describe 'collection' do
+    before do
+      create_list(:book, 3, published: false)
+    end
+
+    it 'counts 1 published' do
+      expect(described_class.published.count).to eq(1)
+    end
+  end
+
   describe 'attributes' do
     context 'when create' do
       it 'has title' do
