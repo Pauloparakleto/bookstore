@@ -1,24 +1,71 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+Project overview
+Rails 6.1 app, uses webpacker for building assets, materialize CSS framework
+(https://materializecss.com/) . The repo is available at https://gerrit.buburuza.org/stan/bookstore
+Setup instructions
+1. Clone repo
+2. Install docker
+3. Install docker-compose
+4. Run docker-compose up
+5. Go to http://localhost:18210/books
 
-* Ruby version
+## Task 1
 
-* System dependencies
+Implement user authentication system - sign up, sign in, sign out, password recovery.
 
-* Configuration
+Hints:
 
-* Database creation
+● use email as an identifier
 
-* Database initialization
+## Task 2
 
-* How to run the test suite
+Implement an admin module for managing books and authors.
+Hints:
 
-* Services (job queues, cache servers, search engines, etc.)
+● Should be implemented from scratch
 
-* Deployment instructions
+● Views should be as simple as possible (in terms of the UI)
+Requirements:
 
-* ...
+● Add roles for users - admin/customer
+
+● Validation should be added to all the models
+
+● Every update to any model should be recorded in a separate audit table (needs to be
+added)
+
+● It should be possible to update book title, price, published state
+
+● It should be possible to update author first name, last name
+
+● It should be possible to delete/block users. If an user is blocked, when they’re trying to
+log in, a “You are blocked, please contact support” message should be displayed
+
+## Task 3
+
+Add the possibility for a logged user to add books to their shopping cart
+
+Requirements:
+
+● Add a quantity attribute to books
+
+● It should not be possible to add a book if its quantity is zero
+
+● Shopping cart contents should be saved in the DB (in order to be persistent between
+browsers)
+
+● Shopping cart details should be implemented as a separate page that will show a
+summary of what has been added and will include a total price
+General notes
+
+● Ruby style guide should be used: https://github.com/rubocop/ruby-style-guide
+
+● Rails documentation is available at https://guides.rubyonrails.org/ and
+https://api.rubyonrails.org/
+
+● Unit tests (using rspec) need to be added for models
+
+● One unit test per controller action needs to be added in order to confirm that the
+functionality is working as expected
