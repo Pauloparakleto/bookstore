@@ -73,29 +73,28 @@ RSpec.describe Book, type: :model do
   describe 'new attributes' do
     context 'when update valid' do
       before do
-        new_attributes = { title: Faker::Book.title, price: Faker::Number.number,
-                           published: false, quantity: Faker::Number.number.to_i }
+        new_attributes = FactoryBot.attributes_for(:book, published: false)
         book.update(new_attributes)
       end
 
       it 'has title' do
-        expect(book.title).not_to eq(title)
+        expect(book.reload.title).not_to eq(title)
       end
 
       it 'has price' do
-        expect(book.price).not_to eq(price)
+        expect(book.reload.price).not_to eq(price)
       end
 
       it 'has published' do
-        expect(book.published).not_to eq(true)
+        expect(book.reload.published).not_to eq(true)
       end
 
       it 'has published?' do
-        expect(book.published?).not_to eq(true)
+        expect(book.reload.published?).not_to eq(true)
       end
 
       it 'has quantity' do
-        expect(book.quantity).not_to eq(27)
+        expect(book.reload.quantity).not_to eq(27)
       end
     end
 
