@@ -182,6 +182,9 @@ Rails/Delegate:
   Description: 'Prefer delegate method for delegations.'
   Enabled: false
 
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
 # Bundler Cops
 
 Bundler/OrderedGems:
