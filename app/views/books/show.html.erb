@@ -1,6 +1,5 @@
-<div class='container'>
+<main class='container section'>
   <h1>Book</h1>
-  <small><%= link_to 'Edit this book', edit_book_path(@book) %></small>
   <table>
     <thead>
     <tr>
@@ -17,4 +16,9 @@
     </tr>
     </tbody>
   </table>
-</div>
+</main>
+<section class='container section right-align'>
+  <div class='waves-effect waves-light btn'>
+    <%= link_to 'Edit this book', edit_book_path(@book), class: 'white-text' %>
+  </div>
+</section>
