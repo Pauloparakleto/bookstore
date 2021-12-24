@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BooksHelper, type: :helper do
-  let!(:book) { create(:book) }
+  let!(:book) { create(:book, published: true) }
 
   context 'with path' do
     it 'has link to unpublished!' do
