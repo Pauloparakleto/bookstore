@@ -16,6 +16,7 @@
         <td> <%= book.quantity %> </td>
         <td> <%= book.authors %> </td>
         <td> <%= link_to 'Show', book_path(book) %> </td>
+        <td> <%= link_to( display_link_name(book), publish_or_unpublish_path(book), method: 'patch') %> </td>
       </tr>
       </tbody>
     <% end %>
