@@ -4,5 +4,8 @@ Rails.application.routes.draw do
       patch :publish
       patch :unpublish
     end
+    collection do
+      get :unpublished
+    end
   end
 end
