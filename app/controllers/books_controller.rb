@@ -6,6 +6,11 @@ class BooksController < ApplicationController
     @books = Book.published.map { |book| BooksPresenter.new(book) }
   end
 
+  def unpublished
+    @books = Book.unpublished.map { |book| BooksPresenter.new(book) }
+    render :index
+  end
+
   def show; end
 
   def new
