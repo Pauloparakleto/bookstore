@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :update]
+  before_action :set_book, only: [:show, :update, :publish]
   before_action :build_book, only: [:create]
 
   def index
@@ -26,6 +26,11 @@ class BooksController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def publish
+    @book.published!
+    redirect_to book_path(@book), notice: 'Book published!'
   end
 
   private
