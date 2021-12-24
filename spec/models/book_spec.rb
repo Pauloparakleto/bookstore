@@ -39,10 +39,6 @@ RSpec.describe Book, type: :model do
       end
 
       it 'has published' do
-        expect(book.published).to eq(true)
-      end
-
-      it 'has published?' do
         expect(book.published?).to eq(true)
       end
 
