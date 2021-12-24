@@ -1,0 +1,20 @@
+<div class='container'>
+  <h1>Book</h1>
+  <small><%= link_to 'Edit this book', edit_book_path(@book) %></small>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td> <%= @book.title %> </td>
+      <td> <%= @book.price %> </td>
+      <td> <%= @book.quantity %> </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
