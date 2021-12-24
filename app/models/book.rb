@@ -5,6 +5,6 @@ class Book < ApplicationRecord
   validates :price, :quantity, numericality: { greater_than_or_equal_to: 0 }
 
   enum published: { published: true, unpublished: false }
-  
+
   scope :published, -> { where(published: true) }
 end
