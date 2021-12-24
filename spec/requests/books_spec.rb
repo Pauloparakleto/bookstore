@@ -16,6 +16,14 @@ RSpec.describe '/books', type: :request do
     end
   end
 
+  describe 'GET /unpublished_index' do
+    it 'renders a successful response' do
+      FactoryBot.create_list(:book, 3, published: false)
+      get unpublished_books_path
+      expect(response).to be_successful
+    end
+  end
+
   describe 'GET /show' do
     it 'renders a successful response' do
       book = FactoryBot.create(:book)
