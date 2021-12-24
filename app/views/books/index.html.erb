@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='container section'>
   <table>
     <thead>
     <tr>
@@ -16,10 +16,14 @@
         <td> <%= book.quantity %> </td>
         <td> <%= book.authors %> </td>
         <td> <%= link_to 'Show', book_path(book) %> </td>
-        <td> <%= link_to( display_link_name(book), publish_or_unpublish_path(book), method: 'patch') %> </td>
+        <td> <%= link_to(display_link_name(book), publish_or_unpublish_path(book), method: 'patch') %> </td>
       </tr>
       </tbody>
     <% end %>
     </table>
+  <section class="section right-align">
+    <div class='waves-effect waves-light btn mt-6'>
+      <%= link_to 'New Book', new_book_path, class: 'white-text' %>
+    </div>
+  </section>
 </div>
-
