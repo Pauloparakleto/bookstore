@@ -126,4 +126,16 @@ RSpec.describe Book, type: :model do
       end
     end
   end
+
+  describe 'concerns' do
+    it 'published!' do
+      book.published!
+      expect(book.published?).to eq(true)
+    end
+
+    it 'unpublished!' do
+      book.unpublished!
+      expect(book.published?).to eq(false)
+    end
+  end
 end
