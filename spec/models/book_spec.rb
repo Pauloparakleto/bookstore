@@ -26,6 +26,10 @@ RSpec.describe Book, type: :model do
     it 'counts 1 published' do
       expect(described_class.published.count).to eq(1)
     end
+
+    it 'counts 3 unpublished' do
+      expect(described_class.unpublished.count).to eq(3)
+    end
   end
 
   describe 'attributes' do
@@ -65,6 +69,18 @@ RSpec.describe Book, type: :model do
       it 'has author last name' do
         expect(book.authors.first.last_name).to be_truthy
       end
+    end
+  end
+
+  describe 'default attributes' do
+    it 'has published false' do
+      book = create(:book, published: nil)
+      expect(book.published).to eq(false)
+    end
+
+    it 'counts 1 unpublished' do
+      described_class.create(title: 'The title', quantity: 2, price: 2.34)
+      expect(described_class.unpublished.count).to eq(1)
     end
   end
 
