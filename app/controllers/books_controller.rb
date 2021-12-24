@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :update, :publish, :unpublish]
+  before_action :set_book, only: [:show, :edit, :update, :publish, :unpublish]
   before_action :build_book, only: [:create]
 
   def index
@@ -24,6 +24,8 @@ class BooksController < ApplicationController
       render :new
     end
   end
+
+  def edit; end
 
   def update
     if @book.update(books_params)
