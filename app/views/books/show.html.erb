@@ -1,0 +1,24 @@
+<main class='container section'>
+  <h1>Book</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td> <%= @book.title %> </td>
+      <td> <%= @book.price %> </td>
+      <td> <%= @book.quantity %> </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+<section class='container section right-align'>
+  <div class='waves-effect waves-light btn'>
+    <%= link_to 'Edit this book', edit_book_path(@book), class: 'white-text' %>
+  </div>
+</section>
