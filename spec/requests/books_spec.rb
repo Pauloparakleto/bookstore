@@ -87,4 +87,32 @@ RSpec.describe '/books', type: :request do
       end
     end
   end
+
+  describe 'PATCH /publish' do
+    context 'with valid parameters' do
+      let(:new_attributes) { FactoryBot.attributes_for(:book) }
+
+      it 'redirects to the book' do
+        book = Book.create! valid_attributes
+        book.unpublished!
+        patch publish_book_path(book)
+        expect(response).to redirect_to(book_url(book))
+      end
+
+      it 'book publish!' do
+        book = Book.create! valid_attributes
+        book.unpublished!
+        patch publish_book_path(book)
+        expect(book.reload.published?).to eq(true)
+      end
+    end
+
+    context 'with invalid parameters' do
+      it "renders a non successful response (i.e. to display the 'edit' template)" do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: invalid_attributes }
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
 end
