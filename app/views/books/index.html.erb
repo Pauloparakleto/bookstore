@@ -1,17 +1,24 @@
 <div class='container'>
-  <% @books.each do |book| %>
-    <div class='row'>
-      <div class='col s4'>
-        Title: <%= book.title %>
-      </div>
-
-      <div class='col s4'>
-        Price: <%= book.price %>
-      </div>
-
-      <div class='col s4'>
-        Authors: <%= book.authors %>
-      </div>
-    </div>
-  <% end %>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td> <%= book.title %> </td>
+        <td> <%= book.price %> </td>
+        <td> <%= book.quantity %> </td>
+        <td> <%= book.authors %> </td>
+        <td> <%= link_to 'Show', book_path(book) %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
 </div>
+
