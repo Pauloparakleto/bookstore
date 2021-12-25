@@ -21,7 +21,7 @@ RSpec.describe Author, type: :model do
     end
 
     it 'counts 1 published' do
-      expect(described_class.count).to eq(3)
+      expect(described_class.count).to eq(4)
     end
   end
 
