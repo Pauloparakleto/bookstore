@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  before_action :build_author
+  before_action :build_author, only: :create
   before_action :set_author, only: [:edit, :update, :show]
 
   def index
@@ -8,10 +8,11 @@ class AuthorsController < ApplicationController
 
   def show; end
 
-  def new; end
+  def new
+    @author = Author.new
+  end
 
   def create
-    @author = Author.new(authors_params)
     if @author.save
       redirect_to author_path(@author), notice: 'Author Created!'
     else
@@ -48,7 +49,7 @@ class AuthorsController < ApplicationController
   end
 
   def build_author
-    @author = Author.new
+    @author = Author.new(authors_params)
   end
 
   def set_author
