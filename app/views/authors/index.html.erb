@@ -17,7 +17,9 @@
         <td> <%= author.last_name %> </td>
         <td> <%= author.books %> </td>
         <td> <%= link_to 'Show', author_path(author) %> </td>
-        <td> <%= link_to('Add book to this author', '#', class: 'green-text') %> </td>
+        <td> <%= link_to('Add book to this author',
+                         new_book_author_path(author),
+                         class: 'green-text') %> </td>
       </tr>
       </tbody>
     <% end %>
