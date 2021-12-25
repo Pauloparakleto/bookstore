@@ -1,0 +1,30 @@
+<section class='container'>
+  <h1>Authors</h1>
+</section>
+<section class='container'>
+  <table>
+    <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Books</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @authors.each do |author| %>
+      <tr>
+        <td> <%= author.first_name %> </td>
+        <td> <%= author.last_name %> </td>
+        <td> <%= author.books %> </td>
+        <td> <%= link_to 'Show', author_path(author) %> </td>
+        <td> <%= link_to('Add book to this author', '#', class: 'green-text') %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+  <section class="section right-align">
+    <div class='waves-effect waves-light btn mt-6'>
+      <%= link_to 'New Author', new_author_path, class: 'white-text' %>
+    </div>
+  </section>
+</section>
