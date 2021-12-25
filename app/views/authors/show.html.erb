@@ -1,0 +1,43 @@
+<main class='container section'>
+  <h1>Author</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td> <%= @author.first_name %> </td>
+      <td> <%= @author.last_name %> </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+<section class='container section right-align'>
+  <div class='waves-effect waves-light btn'>
+    <%= link_to 'Edit this author', edit_author_path(@author), class: 'white-text' %>
+  </div>
+</section>
+<section class='container section'>
+  <h3>Books</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td> <%= book.title %> </td>
+        <td> <%= book.price %> </td>
+        <td> <%= book.quantity %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>
