@@ -8,4 +8,6 @@ Rails.application.routes.draw do
       get :unpublished
     end
   end
+
+  resources :authors
 end
