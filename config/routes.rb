@@ -9,5 +9,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :authors
+  resources :authors do
+    member do
+      get :new_book
+      post :book
+    end
+  end
 end
