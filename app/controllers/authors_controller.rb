@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  before_action :build_author, only: [:create]
+  before_action :build_author
   before_action :set_author, only: [:edit, :update, :show]
 
   def index
@@ -8,11 +8,10 @@ class AuthorsController < ApplicationController
 
   def show; end
 
-  def new
-    @author = Author.new
-  end
+  def new; end
 
   def create
+    @author = Author.new(authors_params)
     if @author.save
       redirect_to author_path(@author), notice: 'Author Created!'
     else
@@ -30,6 +29,18 @@ class AuthorsController < ApplicationController
     end
   end
 
+  def new_book
+    @author = Author.find(params[:id])
+    @books = Book.published.map { |book| BooksPresenter.new(book) }
+  end
+
+  def book
+    @author = Author.find(params[:id])
+    @book = Book.find(params[:book_id])
+    @author.books << @book
+    redirect_to books_path, notice: 'The author was included!'
+  end
+
   private
 
   def authors_params
@@ -37,7 +48,7 @@ class AuthorsController < ApplicationController
   end
 
   def build_author
-    @author = Author.new(authors_params)
+    @author = Author.new
   end
 
   def set_author
