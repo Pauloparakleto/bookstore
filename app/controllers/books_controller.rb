@@ -45,6 +45,18 @@ class BooksController < ApplicationController
     redirect_to book_path(@book), notice: 'Book unpublished!'
   end
 
+  def new_author
+    @book = Book.find(params[:id])
+    @authors = Author.all
+  end
+
+  def author
+    @book = Book.find(params[:id])
+    @author = Author.find(params[:author_id])
+    @book.authors << @author
+    redirect_to books_path, notice: 'The author was included!'
+  end
+
   private
 
   def books_params
