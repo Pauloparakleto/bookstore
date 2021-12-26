@@ -12,6 +12,7 @@
     </thead>
     <tbody>
     <% @books.each do |book| %>
+    <% next if @author.books.exists? book.id %>
       <tr>
         <td> <%= book.title %> </td>
         <td> <%= link_to 'Add this author to this book',
