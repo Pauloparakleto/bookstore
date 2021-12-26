@@ -149,4 +149,29 @@ RSpec.describe '/books', type: :request do
       end
     end
   end
+
+  describe 'GET /books/:id/author/new' do
+    it 'builds author list' do
+      create_list(:author, 2)
+      book = Book.create! valid_attributes
+      get new_author_book_path(book)
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'POST /books/:id/authors?author_id=:id' do
+    it 'adds author to book' do
+      author = create(:author)
+      book = Book.create! valid_attributes
+      post author_book_path(book), params: { author_id: author.id }
+      expect(book.authors.count).to eq(1)
+    end
+
+    it 'redirects to books list' do
+      book = create(:book)
+      author = create(:author)
+      post book_author_path(author), params: { book_id: book.id }
+      expect(response).to redirect_to(books_path)
+    end
+  end
 end
