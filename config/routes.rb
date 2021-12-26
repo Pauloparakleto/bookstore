@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :books do
     member do
+      get :new_author
+      post :author
       patch :publish
       patch :unpublish
     end
