@@ -1,0 +1,29 @@
+<section class="container section">
+  <h1> <%= @book.title %> </h1>
+</section>
+<section class="section container">
+  <table>
+    <thead>
+    <tr>
+      <th>
+        First Name
+      </th>
+      <th>
+        Last Name
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @authors.each do |author| %>
+    <% next if @book.authors.exists? author.id %>
+      <tr>
+        <td> <%= author.first_name %> </td>
+        <td> <%= author.last_name %> </td>
+        <td> <%= link_to 'Add this author to this book',
+                         author_book_path(@book, author_id: author.id),
+                         method: :post %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

@@ -72,6 +72,17 @@ RSpec.describe Book, type: :model do
     end
   end
 
+  describe 'association' do
+    context 'with authors' do
+      it 'includes author' do
+        book = described_class.create(attributes_for(:book))
+        author = Author.create(attributes_for(:author))
+        book.authors << [author]
+        expect(book.authors.count).to eq(1)
+      end
+    end
+  end
+
   describe 'default attributes' do
     it 'counts 1 unpublished' do
       described_class.create(title: 'The title', quantity: 2, price: 2.34)
