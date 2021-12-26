@@ -43,7 +43,7 @@ RSpec.describe Order, type: :model do
     end
 
     it 'sums 6.0' do
-      expect(order.total).to eq(6.0)
+      expect(order.total_price).to eq(6.0)
     end
 
     it 'has subtotal' do
