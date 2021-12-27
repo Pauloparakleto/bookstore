@@ -20,6 +20,11 @@ module Users
       redirect_to users_books_path
     end
 
+    def remove_book
+      session[:book_ids].delete(params[:book_id])
+      redirect_to cart_users_orders_path
+    end
+
     private
 
     def new_book_session
