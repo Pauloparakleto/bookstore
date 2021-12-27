@@ -17,4 +17,14 @@ RSpec.describe '/users/orders', type: :request do
 
     it { is_expected.to redirect_to(users_books_path) }
   end
+
+  describe 'POSTs users/orders/remove_book' do
+    let!(:book) { create_list(:book, 2) }
+
+    before do
+      post remove_book_users_orders_path, params: { book: { id: book.first.id } }
+    end
+
+    it { is_expected.to redirect_to(cart_users_orders_path) }
+  end
 end
