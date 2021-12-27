@@ -13,6 +13,13 @@ module Users
       @order
     end
 
+    def add_book
+      return if session[:book_ids].any? params[:book][:id]
+
+      session[:book_ids] << params[:book][:id]
+      redirect_to users_books_path
+    end
+
     private
 
     def new_book_session
