@@ -1,7 +1,7 @@
 module Users
   class OrdersController < ApplicationController
     # TODO, Only user orders list.
-    before_action :new_book_session
+    before_action :new_book_session, except: [:create]
 
     def cart
       @order = Order.new
@@ -11,6 +11,16 @@ module Users
                              quantity: 1, book_id: book_id })
       end
       @order
+    end
+
+    def create
+      @order = Order.new(order_params)
+      if @order.save
+        reset_session
+        redirect_to users_order_path(@order), notice: 'Order Created!'
+      else
+        render 'users/cart/index', alert: 'Order not Processed!'
+      end
     end
 
     def add_book
@@ -29,6 +39,10 @@ module Users
 
     def new_book_session
       session[:book_ids] = [] if session[:book_ids].blank?
+    end
+
+    def order_params
+      params.require(:order).permit(items_attributes: [:name, :price, :quantity, :book_id])
     end
   end
 end
