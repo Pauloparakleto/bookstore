@@ -27,4 +27,14 @@ RSpec.describe '/users/orders', type: :request do
 
     it { is_expected.to redirect_to(cart_users_orders_path) }
   end
+
+  describe 'POSTs users/orders/' do
+    let!(:book) { create_list(:book, 2) }
+
+    before do
+      post users_orders_path, params: { order: { items_attributes: [attributes_for(:item, book_id: book.first.id)] } }
+    end
+
+    it { is_expected.to redirect_to(users_order_path(Order.last)) }
+  end
 end
