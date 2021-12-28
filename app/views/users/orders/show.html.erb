@@ -1,0 +1,30 @@
+<section class='section container'>
+  <h1>Your Order</h1>
+</section>
+<main class='container section'>
+  <table>
+    <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @order.items.each do |item| %>
+      <tr>
+        <td>Not implemented yet</td>
+        <td> <%= item.name %> </td>
+        <td> <%= number_to_currency item.price %> </td>
+        <td> <%= item.quantity %> </td>
+        <td> <%= number_to_currency item.subtotal %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</main>
+<section class="container section right-align">
+  <h4>Total: <%= number_to_currency @order.total_price %></h4>
+</section>
