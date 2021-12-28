@@ -4,7 +4,7 @@ class Order < ApplicationRecord
 
   before_save :set_total_price
 
-  def update(attributes)
+  def update(_attributes)
     nil
   end
 
