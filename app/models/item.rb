@@ -12,7 +12,10 @@ class Item < ApplicationRecord
   end
 
   def book_quantity_available
-    errors.add(:quantity, message: 'This quantity is greater than the books quantity available') if quantity > book.quantity
+    return unless quantity > book.quantity
+
+    errors.add(:quantity,
+               message: 'This quantity is greater than the books quantity available')
   end
 
   def subtotal
