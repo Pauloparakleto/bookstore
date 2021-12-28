@@ -1,0 +1,43 @@
+<section class='section container'>
+  <%= form_for(@order, local: true, url: users_orders_path, method: 'post') do |form| %>
+    <% if @order.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+        <ul>
+          <% @order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @order.items.blank? %>
+      <p>Your Cart is empty.</p>
+    <% end %>
+
+    <% @order.items.each do |item| %>
+      <%= form.fields_for :items, item do |items_form| %>
+        <div>
+          <%= items_form.hidden_field :book_id, value: item.book_id %>
+          <%= items_form.hidden_field :name, value: item.name %>
+          <p><%= item.name %></p>
+          <%= items_form.hidden_field :price, value: item.price %>
+          <p><%= number_to_currency(item.price) %></p>
+          <%= items_form.label :quantity %>
+          <%= items_form.number_field :quantity, min: 1 %>
+          <%= link_to 'Delete', remove_book_users_orders_path(book_id: item.book_id), method: :post %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <section>
+      <p>Total(<%= @order.items.size %> item(s)): <%= number_to_currency @order.total unless @order.total.zero? %> </p>
+    </section>
+
+    <div class="actions">
+      <%= form.submit if @order.items.present? %>
+    </div>
+  <% end %>
+</section>
+

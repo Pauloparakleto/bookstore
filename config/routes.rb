@@ -17,4 +17,17 @@ Rails.application.routes.draw do
       post :book
     end
   end
+
+  resources :orders, only: [:index, :show, :new, :create]
+
+  namespace :users do
+    resources :books, only: [:index, :show]
+    resources :orders, only: [:index, :show, :new, :create] do
+      collection do
+        post :add_book
+        post :remove_book
+        get :cart
+      end
+    end
+  end
 end
