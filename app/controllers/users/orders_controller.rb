@@ -2,6 +2,7 @@ module Users
   class OrdersController < ApplicationController
     # TODO, Only user orders list.
     before_action :new_book_session, except: [:create]
+    before_action :build_order, only: :create
 
     def cart
       @order = Order.new
@@ -14,9 +15,7 @@ module Users
     end
 
     def create
-      @order = Order.new(order_params)
       if @order.save
-        reset_session
         redirect_to users_order_path(@order), notice: 'Order Created!'
       else
         render 'users/cart/index', alert: 'Order not Processed!'
@@ -36,6 +35,11 @@ module Users
     end
 
     private
+
+    def build_order
+      reset_session
+      @order = Order.new(order_params)
+    end
 
     def new_book_session
       session[:book_ids] = [] if session[:book_ids].blank?
