@@ -70,5 +70,6 @@ RSpec.configure do |config|
     end
   end
 
+  # From https://github.com/heartcombo/devise/wiki/How-To:-Test-controllers-with-Rails-(and-RSpec)#controller-specs
   config.include Devise::Test::IntegrationHelpers, type: :request
 end
