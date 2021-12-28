@@ -37,4 +37,18 @@ RSpec.describe '/users/orders', type: :request do
 
     it { is_expected.to redirect_to(users_order_path(Order.last)) }
   end
+
+  describe 'GETs users/orders/show' do
+    let!(:book) { create_list(:book, 2) }
+    let!(:item) { create(:item, book: book.first) }
+    let!(:order) { create(:order, items: [item]) }
+
+    before do
+      get users_order_path(order)
+    end
+
+    it 'render template show' do
+      expect(response).to render_template('show')
+    end
+  end
 end
