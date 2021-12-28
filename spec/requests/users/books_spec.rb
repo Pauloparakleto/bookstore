@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'users/books/', type: :request do
-
   describe 'GETs Index' do
     before do
       FactoryBot.create_list(:book, 2)
