@@ -22,13 +22,6 @@ Rails.application.routes.draw do
 
   namespace :users do
     resources :books, only: [:index, :show]
-    resources :cart, only: [:index, :create] do
-      collection do
-        post :add_book
-        post :remove_book
-      end
-    end
-
     resources :orders, only: [:index, :show, :new, :create] do
       collection do
         post :add_book
