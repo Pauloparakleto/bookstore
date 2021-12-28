@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   belongs_to :book
 
   validates :quantity, numericality: { greater_than_or_equal_to: 1 }
+  validates :price, numericality: { greater_than: 0 }
   validate :book_quantity_available
 
   after_save :subtract_book_quantity
