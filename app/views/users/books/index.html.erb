@@ -1,0 +1,28 @@
+<div class='container section'>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td> <%= book.title %> </td>
+        <td> <%= book.price %> </td>
+        <td> <%= book.quantity %> </td>
+        <td> <%= book.authors %> </td>
+        <td> <%= link_to 'Show', users_book_path(book) %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+  <section class="section right-align">
+    <div class='waves-effect waves-light btn mt-6'>
+      <%= link_to 'Go to Cart', cart_users_orders_path, class: 'white-text' %>
+    </div>
+  </section>
+</div>
