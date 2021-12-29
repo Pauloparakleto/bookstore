@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe '/users', type: :request do
+RSpec.describe '/customers', type: :request do
   let!(:user) { create(:user) }
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      get users_url
+      get customers_url
       expect(response).to be_successful
     end
   end
 
   describe 'Block User' do
     before do
-      patch block_users_path, params: { id: user.id }
+      patch block_customers_path, params: { id: user.id }
     end
 
     it 'renders a successful response' do
-      expect(response).to redirect_to(users_path)
+      expect(response).to redirect_to(customers_path)
     end
 
     it 'has blocked user' do
@@ -26,7 +26,7 @@ RSpec.describe '/users', type: :request do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      get user_url(user)
+      get customer_url(user)
       expect(response).to be_successful
     end
   end
@@ -34,13 +34,13 @@ RSpec.describe '/users', type: :request do
   describe 'DELETE /destroy' do
     it 'destroys the requested user' do
       expect {
-        delete user_url(user)
+        delete customer_url(user)
       }.to change(User, :count).by(-1)
     end
 
     it 'redirects to the users list' do
-      delete user_url(user)
-      expect(response).to redirect_to(users_url)
+      delete customer_url(user)
+      expect(response).to redirect_to(customers_url)
     end
   end
 end
