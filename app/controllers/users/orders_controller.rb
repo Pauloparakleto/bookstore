@@ -1,5 +1,5 @@
 module Users
-  class OrdersController < ApplicationController
+  class OrdersController < Users::UsersController
     # TODO, Only user orders list.
     before_action :new_book_session, except: [:create]
     before_action :build_order, only: :create
