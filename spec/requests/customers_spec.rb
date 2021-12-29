@@ -24,6 +24,21 @@ RSpec.describe '/customers', type: :request do
     end
   end
 
+  describe 'Unblock Customer' do
+    before do
+      user.blocked!
+      patch unblock_customers_path, params: { id: user.id }
+    end
+
+    it 'renders a successful response' do
+      expect(response).to redirect_to(customers_path)
+    end
+
+    it 'has blocked user' do
+      expect(user.reload.blocked?).to eq(false)
+    end
+  end
+
   describe 'GET /show' do
     it 'renders a successful response' do
       get customer_url(user)
