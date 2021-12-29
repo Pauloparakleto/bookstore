@@ -39,7 +39,8 @@ RSpec.describe '/users/orders', type: :request do
 
     before do
       post users_orders_path,
-           params: { order: { items_attributes: [attributes_for(:item, book_id: book.first.id)] } }
+           params: { order: { items_attributes: [attributes_for(:item, name: book.first.title,
+                                                                       book_id: book.first.id)] } }
     end
 
     it { is_expected.to redirect_to(users_order_path(Order.last)) }
