@@ -1,0 +1,17 @@
+<div class='container section'>
+  <table>
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Blocked Status</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <%= @user.email %> </td>
+        <td> <%= @user.blocked? %> </td>
+        <td> <%= link_to 'Block', '#' %> </td>
+      </tr>
+      </tbody>
+    </table>
+</div>
