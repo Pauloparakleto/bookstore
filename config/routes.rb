@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :customers, only: [:index, :show, :destroy] do
     collection do
       patch :block
+      patch :unblock
     end
   end
 
