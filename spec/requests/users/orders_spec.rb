@@ -57,7 +57,7 @@ RSpec.describe '/users/orders', type: :request do
   describe 'GETs users/orders/show' do
     let!(:book) { create_list(:book, 2) }
     let!(:item) { create(:item, book: book.first) }
-    let!(:order) { create(:order, items: [item]) }
+    let!(:order) { create(:order, items: [item], user: user) }
 
     before do
       get users_order_path(order)
