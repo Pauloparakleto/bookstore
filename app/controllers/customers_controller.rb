@@ -16,7 +16,13 @@ class CustomersController < ApplicationController
   def block
     @user = User.find(params[:id])
     @user.blocked!
-    redirect_to customers_path, notice: 'User was blocked!'
+    redirect_to customers_path, notice: 'Customer was blocked!'
+  end
+
+  def unblock
+    @user = User.find(params[:id])
+    @user.unblocked!
+    redirect_to customers_path, notice: 'Customer was unblocked!'
   end
 
   private
