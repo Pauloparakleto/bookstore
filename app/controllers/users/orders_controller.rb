@@ -37,7 +37,7 @@ module Users
     private
 
     def build_order
-      reset_session
+      session[:book_ids] = []
       @order = Order.new(order_params)
     end
 
