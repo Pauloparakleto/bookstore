@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'devise/sessions#new'
   end
 
-  resources :customers do
+  resources :customers, only: [:index, :show, :destroy] do
     collection do
       patch :block
     end
