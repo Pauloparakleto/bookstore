@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
+  let!(:user) { create(:user) }
   let!(:book) { create(:book) }
   let!(:item) { create_list(:item, 2, name: book.title, book: book) }
-  let!(:order) { create(:order, items: item) }
+  let!(:order) { create(:order, items: item, user: user) }
 
   context 'when create' do
+    it 'belongs to user' do
+      expect(order.user).to eq(user)
+    end
+
     it 'has 1 book now available' do
       expect(book.reload.quantity).to eq(2)
     end
@@ -53,7 +58,7 @@ RSpec.describe Order, type: :model do
 
   context 'when create invalid' do
     it 'has item quantity greater than book quantity' do
-      message = ['Items quantity This quantity is greater than the books quantity available']
+      message = ['Items quantity This quantity is greater than the books quantity available', 'User must exist']
       order = described_class.new(items_attributes: [{ name: item.first.book.title, price: 1.0,
                                                        quantity: 3, book_id: book.id }])
       order.save

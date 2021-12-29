@@ -1,6 +1,5 @@
 module Users
   class OrdersController < Users::UsersController
-    # TODO, Only user orders list.
     before_action :new_book_session, except: [:create]
     before_action :build_order, only: :create
 
@@ -11,14 +10,14 @@ module Users
     end
 
     def show
-      @order = Order.find(params[:id])
+      @order = current_user.orders.find(params[:id])
     end
 
     def create
       if @order.save
         redirect_to users_order_path(@order), notice: 'Order Created!'
       else
-        render 'users/cart/index', alert: 'Order not Processed!'
+        render 'users/orders/cart', alert: 'Order not Processed!'
       end
     end
 
@@ -38,7 +37,7 @@ module Users
 
     def build_order
       session[:book_ids] = []
-      @order = Order.new(order_params)
+      @order = current_user.orders.build(order_params)
     end
 
     def new_book_session

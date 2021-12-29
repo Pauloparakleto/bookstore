@@ -38,16 +38,26 @@ RSpec.describe '/users/orders', type: :request do
     let!(:book) { create_list(:book, 2) }
 
     before do
-      post users_orders_path, params: { order: { items_attributes: [attributes_for(:item, book_id: book.first.id)] } }
+      post users_orders_path,
+           params: { order: { items_attributes: [attributes_for(:item, name: book.first.title,
+                                                                       book_id: book.first.id)] } }
     end
 
     it { is_expected.to redirect_to(users_order_path(Order.last)) }
+
+    it 'belongs to user' do
+      expect(Order.last.user).to eq(user)
+    end
+
+    it 'has item' do
+      expect(Order.last.items.first.name).to eq(book.first.title)
+    end
   end
 
   describe 'GETs users/orders/show' do
     let!(:book) { create_list(:book, 2) }
     let!(:item) { create(:item, book: book.first) }
-    let!(:order) { create(:order, items: [item]) }
+    let!(:order) { create(:order, items: [item], user: user) }
 
     before do
       get users_order_path(order)
