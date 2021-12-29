@@ -16,4 +16,10 @@ module ApplicationHelper
 
     unblock_customers_path(user)
   end
+
+  def name_to_block_or_unblock_customer(user)
+    return 'Block Customer' if user.unblocked?
+
+    'Unblock Customer'
+  end
 end
