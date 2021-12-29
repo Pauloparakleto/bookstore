@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe '/users/orders', type: :request do
+  let!(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
+
   describe 'GETS cart' do
     it 'redirects to users books' do
       get cart_users_orders_path

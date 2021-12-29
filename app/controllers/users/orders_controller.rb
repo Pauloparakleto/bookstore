@@ -1,5 +1,5 @@
 module Users
-  class OrdersController < ApplicationController
+  class OrdersController < Users::UsersController
     # TODO, Only user orders list.
     before_action :new_book_session, except: [:create]
     before_action :build_order, only: :create
@@ -37,7 +37,7 @@ module Users
     private
 
     def build_order
-      reset_session
+      session[:book_ids] = []
       @order = Order.new(order_params)
     end
 

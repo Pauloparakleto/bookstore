@@ -1,0 +1,26 @@
+<section class="section container">
+  <h4 class="center-align grey-text">Forgot your password?</h4>
+  <div class="card section hoverable">
+    <div class="container">
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <%= render "users/shared/error_messages", resource: resource %>
+
+        <div class="input-field col s12">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <div class="row valign-wrapper">
+          <div class="col s6">
+            <%= render "users/shared/links" %>
+          </div>
+          <div class="col s6 right-align">
+            <div class="waves-effect waves-light btn">
+              <%= f.submit "Send me instructions", class: 'white-text' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
