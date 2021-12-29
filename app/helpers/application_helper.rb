@@ -10,4 +10,10 @@ module ApplicationHelper
 
     'Sign in'
   end
+
+  def path_to_block_or_unblock_customer(user)
+    return block_customers_path(user) if user.unblocked?
+
+    unblock_customers_path(user)
+  end
 end
