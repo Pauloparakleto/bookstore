@@ -11,6 +11,12 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'devise/sessions#new'
   end
 
+  resources :customers do
+    collection do
+      patch :block
+    end
+  end
+
   resources :books do
     member do
       get :new_author
@@ -29,8 +35,6 @@ Rails.application.routes.draw do
       post :book
     end
   end
-
-  resources :orders, only: [:index, :show, :new, :create]
 
   namespace :users do
     resources :books, only: [:index, :show]
