@@ -26,6 +26,14 @@ RSpec.describe User, type: :model do
       expect(user.orders.first).to be_truthy
     end
 
+    it 'counts 1 order' do
+      expect(user.orders.count).to eq(1)
+    end
+
+    it 'counts 1 item' do
+      expect(user.orders.first.items.count).to eq(1)
+    end
+
     it 'has order item' do
       expect(user.orders.first.items.first.name).to eq(book.title)
     end
