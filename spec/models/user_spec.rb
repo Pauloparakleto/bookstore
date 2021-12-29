@@ -14,6 +14,17 @@ RSpec.describe User, type: :model do
     it 'has email' do
       expect(user.email).to be_truthy
     end
+
+    it 'is false default' do
+      expect(user.blocked?).to eq(false)
+    end
+  end
+
+  describe 'blocked!' do
+    it 'is updates to true' do
+      user.blocked!
+      expect(user.reload.blocked?).to eq(true)
+    end
   end
 
   describe 'association to order' do
