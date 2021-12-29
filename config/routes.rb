@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+
+  devise_for :users
+
+  scope :user do
+    root to: 'users/books#index'
+  end
+
+  devise_scope :user do
+    get 'sign_out', to: 'devise/sessions#destroy'
+    get 'sign_in', to: 'devise/sessions#new'
+  end
+
   resources :books do
     member do
       get :new_author
