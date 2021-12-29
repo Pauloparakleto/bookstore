@@ -18,7 +18,7 @@ module Users
       if @order.save
         redirect_to users_order_path(@order), notice: 'Order Created!'
       else
-        render 'users/cart/index', alert: 'Order not Processed!'
+        render 'users/orders/cart', alert: 'Order not Processed!'
       end
     end
 
@@ -38,7 +38,7 @@ module Users
 
     def build_order
       session[:book_ids] = []
-      @order = Order.new(order_params)
+      @order = current_user.orders.build(order_params)
     end
 
     def new_book_session
