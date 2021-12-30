@@ -1,4 +1,5 @@
 class AuthorsController < ApplicationController
+  before_action :authenticate_admin!
   before_action :build_author, only: :create
   before_action :set_author, only: [:edit, :update, :show]
 
