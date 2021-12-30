@@ -22,4 +22,16 @@ module ApplicationHelper
 
     'Unblock Customer'
   end
+
+  def enter_leave_admin_area
+    return new_admin_session_path unless admin_signed_in?
+
+    sign_out_path
+  end
+
+  def link_name_leave_or_enter_admin_area
+    return 'Enter Admin Area' unless admin_signed_in?
+
+    'Leave Admin Area'
+  end
 end
