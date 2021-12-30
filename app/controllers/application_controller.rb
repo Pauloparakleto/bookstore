@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
   def after_sign_in_path_for(_resource)
-    users_root_path
+    if _resource.is_a? User
+      users_root_path
+    elsif _resource.is_a? Admin
+      root_path
+    else
+      users_root_path
+    end
   end
 
   private
