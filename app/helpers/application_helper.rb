@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def root_for_resource
+    return root_path if admin_signed_in?
+
+    users_root_path
+  end
+
   def sign_in_or_sign_out_path
     return sign_out_path if user_signed_in?
 
