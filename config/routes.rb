@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  scope :user do
-    root to: 'users/books#index'
+  namespace :users do
+    root to: 'books#index'
   end
 
   devise_scope :user do
