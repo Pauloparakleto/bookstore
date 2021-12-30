@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   root to: 'books#index'
-  devise_for :admins
+  devise_for :admins, skype: [:registration]
   devise_for :users
 
   namespace :users do
     root to: 'books#index'
+  end
+
+  devise_scope :admin do
+    delete 'sign_out', to: 'devise/sessions#destroy'
   end
 
   devise_scope :user do
