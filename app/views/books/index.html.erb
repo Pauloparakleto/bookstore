@@ -1,4 +1,5 @@
-<div class='container section'>
+<section class='container section'>
+  <h5 class="grey-text">Published</h5>
   <table>
     <thead>
     <tr>
@@ -29,4 +30,32 @@
       <%= link_to 'New Book', new_book_path, class: 'white-text' %>
     </div>
   </section>
-</div>
+</section>
+<section class="container section">
+  <h5 class="grey-text">Not published</h5>
+  <table>
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @unpublished_books.each do |unpublished_book| %>
+      <tr>
+        <td> <%= unpublished_book.title %> </td>
+        <td> <%= unpublished_book.price %> </td>
+        <td> <%= unpublished_book.quantity %> </td>
+        <td> <%= unpublished_book.authors %> </td>
+        <td> <%= link_to 'Show', book_path(unpublished_book) %> </td>
+        <td> <%= link_to 'Add author', new_author_book_path(unpublished_book) %> </td>
+        <td> <%= link_to(display_link_name(unpublished_book),
+                         publish_or_unpublish_path(unpublished_book),
+                         method: 'patch', class: 'green-text') %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</section>
