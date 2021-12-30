@@ -3,10 +3,15 @@ require 'rails_helper'
 RSpec.describe '/books', type: :request do
   # TODO, publish and unpublished a book.
   # TODO, add author to a book.
+  let!(:admin) { create(:admin) }
   let(:valid_attributes) { FactoryBot.attributes_for(:book) }
   let(:invalid_attributes) {
     FactoryBot.attributes_for(:book, quantity: -2, price: -1)
   }
+
+  before do
+    sign_in admin
+  end
 
   describe 'GET /index' do
     it 'renders a successful response' do
