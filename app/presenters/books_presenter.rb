@@ -2,7 +2,7 @@ class BooksPresenter < SimpleDelegator
   include ActiveSupport::NumberHelper
 
   def price
-    number_to_currency(super / 100)
+    number_to_currency(super)
   end
 
   def authors

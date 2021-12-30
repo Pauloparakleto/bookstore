@@ -11,6 +11,7 @@
         <td> <%= @user.email %> </td>
         <td> <%= @user.blocked? %> </td>
         <td> <%= link_to name_to_block_or_unblock_customer(@user), path_to_block_or_unblock_customer(@user), method: :patch %> </td>
+        <td> <%= link_to 'Delete', customer_path(@user), method: :delete, data: { confirm: "Are you sure?" } %> </td>
       </tr>
       </tbody>
     </table>

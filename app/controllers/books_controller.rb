@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_book, only: [:show, :edit, :update, :publish, :unpublish]
+  before_action :present_book, only: [:show, :update, :publish, :unpublish]
+  before_action :set_book, only: [:edit]
   before_action :build_book, only: [:create]
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
+    @unpublished_books = Book.unpublished.map { |unpublished_book| BooksPresenter.new(unpublished_book) }
   end
 
   def unpublished
@@ -70,5 +72,10 @@ class BooksController < ApplicationController
 
   def set_book
     @book = Book.find(params[:id])
+  end
+
+  def present_book
+    book = Book.find(params[:id])
+    @book = BooksPresenter.new(book)
   end
 end

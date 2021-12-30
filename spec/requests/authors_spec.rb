@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe '/authors', type: :request do
+  let!(:admin) { create(:admin) }
   let(:valid_attributes) { FactoryBot.attributes_for(:author) }
   let(:invalid_attributes) {
     FactoryBot.attributes_for(:author, first_name: nil)
   }
+
+  before do
+    sign_in admin
+  end
 
   describe 'GET /index' do
     it 'renders a successful response' do

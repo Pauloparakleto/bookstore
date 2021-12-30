@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe '/customers', type: :request do
+  let!(:admin) { create(:admin) }
   let!(:user) { create(:user) }
+
+  before do
+    sign_in admin
+  end
 
   describe 'GET /index' do
     it 'renders a successful response' do
