@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  root to: 'books#index'
+  devise_for :admins
   devise_for :users
 
   namespace :users do
