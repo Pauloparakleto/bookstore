@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'books#index'
-  devise_for :admins, skype: [:registration]
+  devise_for :admins, skip: [:registration]
   devise_for :users
 
   namespace :users do
