@@ -1,0 +1,17 @@
+<div class='container section'>
+  <table>
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Blocked Status</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <%= @user.email %> </td>
+        <td> <%= @user.blocked? %> </td>
+        <td> <%= link_to name_to_block_or_unblock_customer(@user), path_to_block_or_unblock_customer(@user), method: :patch %> </td>
+      </tr>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,19 @@
+<div class='container section'>
+  <table>
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Blocked Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td> <%= user.email %> </td>
+        <td> <%= user.blocked? %> </td>
+        <td> <%= link_to 'Show', customer_path(user) %> </td>
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</div>

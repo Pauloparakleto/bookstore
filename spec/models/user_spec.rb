@@ -14,6 +14,17 @@ RSpec.describe User, type: :model do
     it 'has email' do
       expect(user.email).to be_truthy
     end
+
+    it 'is false default' do
+      expect(user.blocked?).to eq(false)
+    end
+  end
+
+  describe 'blocked!' do
+    it 'is updates to true' do
+      user.blocked!
+      expect(user.reload.blocked?).to eq(true)
+    end
   end
 
   describe 'association to order' do
@@ -24,6 +35,14 @@ RSpec.describe User, type: :model do
 
     it 'has order' do
       expect(user.orders.first).to be_truthy
+    end
+
+    it 'counts 1 order' do
+      expect(user.orders.count).to eq(1)
+    end
+
+    it 'counts 1 item' do
+      expect(user.orders.first.items.count).to eq(1)
     end
 
     it 'has order item' do
