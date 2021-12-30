@@ -5,7 +5,6 @@
   <table>
     <thead>
     <tr>
-      <th>Customer</th>
       <th>Title</th>
       <th>Price</th>
       <th>Quantity</th>
@@ -15,7 +14,6 @@
     <tbody>
     <% @order.items.each do |item| %>
       <tr>
-        <td>Not implemented yet</td>
         <td> <%= item.name %> </td>
         <td> <%= number_to_currency item.price %> </td>
         <td> <%= item.quantity %> </td>
