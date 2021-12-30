@@ -6,6 +6,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
+    @unpublished_books = Book.unpublished.map { |unpublished_book| BooksPresenter.new(unpublished_book) }
   end
 
   def unpublished
