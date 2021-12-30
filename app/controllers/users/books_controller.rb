@@ -6,7 +6,8 @@ module Users
     end
 
     def show
-      @book = Book.find(params[:id])
+      book = Book.find(params[:id])
+      @book = BooksPresenter.new(book)
     end
 
     private
