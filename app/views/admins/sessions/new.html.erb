@@ -1,0 +1,31 @@
+<section class="section container">
+  <h4 class="center-align grey-text">Log in as Admin</h4>
+  <div class="card section hoverable">
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="container">
+        <div class="input-field col s12">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <div class="input-field col s12">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "current-password", id: 'password' %>
+        </div>
+
+        <div class="row valign-wrapper">
+          <div class="col s6">
+            <%= render "admins/shared/links" %>
+          </div>
+          <div class="col s6 right-align">
+            <div class="waves-effect waves-light btn">
+              <%= f.submit "Log in", class: 'white-text' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+</section>

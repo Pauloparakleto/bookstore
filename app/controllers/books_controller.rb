@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_book, only: [:show, :edit, :update, :publish, :unpublish]
   before_action :build_book, only: [:create]
 

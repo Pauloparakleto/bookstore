@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def root_for_resource
+    return root_path if admin_signed_in?
+
+    users_root_path
+  end
+
   def sign_in_or_sign_out_path
     return sign_out_path if user_signed_in?
 
@@ -21,5 +27,17 @@ module ApplicationHelper
     return 'Block Customer' if user.unblocked?
 
     'Unblock Customer'
+  end
+
+  def enter_leave_admin_area
+    return new_admin_session_path unless admin_signed_in?
+
+    sign_out_path
+  end
+
+  def link_name_leave_or_enter_admin_area
+    return 'Enter Admin Area' unless admin_signed_in?
+
+    'Leave Admin Area'
   end
 end
