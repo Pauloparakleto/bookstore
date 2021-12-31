@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Audit::Book do
+RSpec.describe Audit::BookSheriff do
   subject(:module_audit_book) {
     described_class.new(attributes_with_new_title,
                         { admin: admin, book: book })
   }
 
-  let!(:attributes_with_new_title) { { title: 'another title', price: 80_859.68, quantity: 1 } }
+  let!(:attributes_with_new_title) { { title: 'another title', price: book.price, quantity: 1 } }
   let(:admin) { create(:admin) }
   let(:book) { create(:book) }
 
@@ -15,7 +15,7 @@ RSpec.describe Audit::Book do
       expect(module_audit_book).to be_truthy
     end
 
-    it 'returns only new title' do
+    it 'returns only new title and quantity' do
       expect(module_audit_book.check_difference).to eq({ title: 'another title', quantity: 1 })
     end
 
