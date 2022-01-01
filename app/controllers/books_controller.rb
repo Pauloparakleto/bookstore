@@ -4,6 +4,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:edit]
   before_action :build_book, only: [:create]
   before_action :call_book_sheriff, only: [:update]
+  after_action :create_audit_book, only: [:update]
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
@@ -33,7 +34,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(books_params)
-      @book_sheriff.create
+
       redirect_to book_path(@book), notice: 'The Book was updated!'
     else
       render :edit
@@ -66,6 +67,12 @@ class BooksController < ApplicationController
 
   def call_book_sheriff
     @book_sheriff = Audit::BookSheriff.new(books_params, { admin: current_admin, book: @book })
+  end
+
+  def create_audit_book
+    return unless @book.valid?
+
+    @book_sheriff.create
   end
 
   def books_params
