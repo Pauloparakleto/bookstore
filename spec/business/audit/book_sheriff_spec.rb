@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Audit::BookSheriff do 
+RSpec.describe Audit::BookSheriff do
   subject(:module_audit_book_only_price) {
     described_class.new(only_change_price_attribute,
                         { admin: admin, book: book })
