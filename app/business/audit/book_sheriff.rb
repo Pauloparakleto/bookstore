@@ -1,7 +1,7 @@
 module Audit
   class BookSheriff
     attr_reader :admin, :book
-    attr_accessor :title, :quantity, :price
+    attr_accessor :title, :quantity, :price, :published
 
     def initialize(attributes, models)
       @attributes = attributes
@@ -11,18 +11,20 @@ module Audit
     end
 
     def book_attributes_to_compare
-      book.attributes.slice('title', 'quantity', 'price').symbolize_keys
+      book.attributes.slice('title', 'quantity', 'price', 'published').symbolize_keys
     end
 
     def set_attributes_differences
       set_title_difference
       set_quantity_difference
       set_price_difference
+      set_published_difference
     end
 
     def create
       set_attributes_differences
-      AuditBook.create(admin_id: admin.id, book_id: book.id, title: title, quantity: quantity, price: price)
+      AuditBook.create(admin_id: admin.id, book_id: book.id, title: title, quantity: quantity, price: price,
+                       published: published)
     end
 
     private
@@ -33,6 +35,14 @@ module Audit
 
     def set_price_difference
       @price = @attributes.fetch(:price) unless book_attributes_to_compare.fetch(:price).eql?(@attributes.fetch(:price))
+    end
+
+    def set_published_difference
+      @published = @attributes.fetch(:published, nil) unless book_attributes_to_compare.
+        fetch(:published,
+              nil).eql?(@attributes.fetch(
+      :published, nil
+    ))
     end
 
     def set_quantity_difference
