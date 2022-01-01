@@ -7,6 +7,7 @@ module Audit
       @attributes = attributes
       @admin = models.fetch(:admin)
       @book = models.fetch(:book)
+      set_attributes_differences
     end
 
     def book_attributes_to_compare
@@ -31,7 +32,7 @@ module Audit
     end
 
     def set_price_difference
-      @title = @attributes.fetch(:price) unless book_attributes_to_compare.fetch(:price).eql?(@attributes.fetch(:price))
+      @price = @attributes.fetch(:price) unless book_attributes_to_compare.fetch(:price).eql?(@attributes.fetch(:price))
     end
 
     def set_quantity_difference
