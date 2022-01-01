@@ -72,7 +72,7 @@ RSpec.describe '/books', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:book) }
+      let(:new_attributes) { FactoryBot.attributes_for(:book, quantity: 1) }
 
       it 'redirects to the book' do
         book = Book.create! valid_attributes
@@ -156,7 +156,7 @@ RSpec.describe '/books', type: :request do
 
         patch publish_book_path(book)
 
-        expect(AuditBook.last.published).to eq(true)
+        expect(AuditBook.last.published).to eq('published')
       end
 
       it 'has book quantity nil!' do
@@ -210,11 +210,13 @@ RSpec.describe '/books', type: :request do
 
         patch unpublish_book_path(book)
 
-        expect(AuditBook.last.published).to eq(false)
+        expect(AuditBook.last.published).to eq('unpublished')
       end
 
       it 'has book quantity nil!' do
         book = Book.create! valid_attributes
+
+        book.published!
 
         patch unpublish_book_path(book)
 
