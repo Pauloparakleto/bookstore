@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Audit::BookSheriff do
+  # TODO, when publish and unpublish books
+
   subject(:module_audit_book_only_price) {
     described_class.new(only_change_price_attribute,
                         { admin: admin, book: book })
@@ -10,7 +12,7 @@ RSpec.describe Audit::BookSheriff do
     described_class.new(attributes_with_new_title,
                         { admin: admin, book: book })
   }
-  let!(:attributes_with_new_title) { { title: 'another title', price: book.price, quantity: 1 } }
+  let!(:attributes_with_new_title) { { title: 'another title', price: book.price, quantity: 1, published: true } }
   let!(:only_change_price_attribute) { { title: book.title, price: 233, quantity: book.quantity } }
   let(:admin) { create(:admin) }
   let(:book) { create(:book) }
@@ -22,7 +24,7 @@ RSpec.describe Audit::BookSheriff do
 
     it 'select book attributes' do
       expect(module_audit_book.book_attributes_to_compare).to eq({ title: book.title, quantity: book.quantity,
-                                                                   price: book.price })
+                                                                   price: book.price, published: book.published })
     end
 
     it 'returns the admin' do
@@ -61,6 +63,10 @@ RSpec.describe Audit::BookSheriff do
 
     it 'has nil quantity' do
       expect(AuditBook.last.quantity).to eq(1)
+    end
+
+    it 'has pubished true' do
+      expect(AuditBook.last.published).to eq(true)
     end
   end
 
