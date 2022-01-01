@@ -74,7 +74,7 @@ class BooksController < ApplicationController
   end
 
   def unpublished_params_to_book_sheriff
-    { title: nil, quantity: nil, price: nil, published: false }
+    { title: nil, quantity: nil, price: nil, published: 'unpublished' }
   end
 
   def call_book_sheriff
