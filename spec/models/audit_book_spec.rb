@@ -20,6 +20,10 @@ RSpec.describe AuditBook, type: :model do
       expect(audit_book).to have_db_column(:quantity).of_type(:integer)
     end
 
+    it 'published' do
+      expect(audit_book).to have_db_column(:published).of_type(:boolean)
+    end
+
     it 'price' do
       expect(audit_book).to have_db_column(:price).with_options(precision: 10, scale: 2).of_type(:decimal)
     end
