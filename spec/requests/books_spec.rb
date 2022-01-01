@@ -153,21 +153,21 @@ RSpec.describe '/books', type: :request do
 
       it 'book publish!' do
         book = Book.create! valid_attributes
-       
+
         patch publish_book_path(book)
 
         expect(AuditBook.last.published).to eq(true)
       end
-    
+
       it 'has book quantity nil!' do
         book = Book.create! valid_attributes
-       
+
         patch publish_book_path(book)
 
         expect(AuditBook.last.quantity).to be_nil
       end
-    
-      it 'book publish!' do
+
+      it 'book published!' do
         book = Book.create! valid_attributes
         book.unpublished!
         patch publish_book_path(book)
@@ -196,8 +196,29 @@ RSpec.describe '/books', type: :request do
 
       it 'book unpublish!' do
         book = Book.create! valid_attributes
+        book.published!
+
         patch unpublish_book_path(book)
+
         expect(book.reload.published?).to eq(false)
+      end
+
+      it 'book unpublished!' do
+        book = Book.create! valid_attributes
+        book.published!
+        book.reload
+
+        patch unpublish_book_path(book)
+
+        expect(AuditBook.last.published).to eq(false)
+      end
+
+      it 'has book quantity nil!' do
+        book = Book.create! valid_attributes
+
+        patch unpublish_book_path(book)
+
+        expect(AuditBook.last.quantity).to be_nil
       end
     end
 
