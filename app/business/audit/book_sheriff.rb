@@ -9,6 +9,23 @@ module Audit
       @book = models.fetch(:book)
     end
 
+    def book_attributes_to_compare
+      book.attributes.slice('title', 'quantity', 'price').symbolize_keys
+    end
+
+    def set_attributes_differences
+      set_title_difference
+      set_quantity_difference
+      set_price_difference
+    end
+
+    def create
+      set_attributes_differences
+      AuditBook.create(admin_id: admin.id, book_id: book.id, title: title, quantity: quantity, price: price)
+    end
+
+    private
+
     def set_title_difference
       @title = @attributes.fetch(:title) unless book_attributes_to_compare.fetch(:title).eql?(@attributes.fetch(:title))
     end
@@ -20,17 +37,6 @@ module Audit
     def set_quantity_difference
       @quantity = @attributes.fetch(:quantity) unless book_attributes_to_compare.fetch(:quantity)
         .eql?(@attributes.fetch(:quantity))
-    end
-
-    def book_attributes_to_compare
-      book.attributes.slice('title', 'quantity', 'price').symbolize_keys
-    end
-
-    def create
-      set_title_difference
-      set_quantity_difference
-      set_price_difference
-      AuditBook.create(admin_id: admin.id, book_id: book.id, title: title, quantity: quantity, price: price)
     end
   end
 end
