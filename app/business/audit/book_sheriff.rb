@@ -22,9 +22,15 @@ module Audit
     end
 
     def create
+      return unless there_is_changes
+
       set_attributes_differences
       AuditBook.create(admin_id: admin.id, book_id: book.id, title: title, quantity: quantity, price: price,
                        published: published)
+    end
+
+    def there_is_changes
+      [title, quantity, price, published].any?
     end
 
     private
@@ -34,7 +40,8 @@ module Audit
     end
 
     def set_price_difference
-      @price = @attributes.fetch(:price) unless book_attributes_to_compare.fetch(:price).eql?(@attributes.fetch(:price))
+      @price = @attributes.fetch(:price) unless book_attributes_to_compare.fetch(:price)
+        .eql?(@attributes.fetch(:price).to_d)
     end
 
     def set_published_difference
@@ -46,8 +53,10 @@ module Audit
     end
 
     def set_quantity_difference
+      return @quantity = nil if @attributes.fetch(:quantity).blank?
+
       @quantity = @attributes.fetch(:quantity) unless book_attributes_to_compare.fetch(:quantity)
-        .eql?(@attributes.fetch(:quantity))
+        .eql?(@attributes.fetch(:quantity).to_i)
     end
   end
 end
