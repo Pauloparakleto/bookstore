@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:edit]
   before_action :build_book, only: [:create]
   before_action :call_book_sheriff, only: [:update]
-  after_action :create_audit_book, only: [:update]
+  after_action :create_audit_book, only: [:update, :publish]
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
@@ -42,6 +42,8 @@ class BooksController < ApplicationController
   end
 
   def publish
+    @book_sheriff = Audit::BookSheriff.new({ title: nil, quantity: nil, price: nil, published: 'published' },
+                                           { admin: current_admin, book: @book })
     @book.published!
     redirect_to book_path(@book), notice: 'Book published!'
   end
