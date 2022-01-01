@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Audit::BookSheriff do
-  # TODO, when publish and unpublish books
-
+RSpec.describe Audit::BookSheriff do 
   subject(:module_audit_book_only_price) {
     described_class.new(only_change_price_attribute,
                         { admin: admin, book: book })
@@ -12,7 +10,9 @@ RSpec.describe Audit::BookSheriff do
     described_class.new(attributes_with_new_title,
                         { admin: admin, book: book })
   }
-  let!(:attributes_with_new_title) { { title: 'another title', price: book.price, quantity: 1, published: true } }
+  let!(:attributes_with_new_title) {
+    { title: 'another title', price: book.price, quantity: 1, published: 'published' }
+  }
   let!(:only_change_price_attribute) { { title: book.title, price: 233, quantity: book.quantity } }
   let(:admin) { create(:admin) }
   let(:book) { create(:book) }
@@ -66,7 +66,7 @@ RSpec.describe Audit::BookSheriff do
     end
 
     it 'has pubished true' do
-      expect(AuditBook.last.published).to eq(true)
+      expect(AuditBook.last.published).to eq('published')
     end
   end
 
@@ -95,10 +95,19 @@ RSpec.describe Audit::BookSheriff do
     end
 
     it 'has published false' do
-      sheriff = described_class.new({ title: nil, quantity: nil, price: nil, published: false },
+      sheriff = described_class.new({ title: nil, quantity: nil, price: nil, published: 'unpublished' },
                                     { admin: admin, book: book })
       sheriff.create
-      expect(AuditBook.last.published).to eq(false)
+      expect(AuditBook.last.published).to eq('unpublished')
+    end
+  end
+
+  context 'when there is no change!' do
+    it 'does not create audit book' do
+      sheriff = described_class.new({ title: book.title, quantity: book.quantity, price: book.price },
+                                    { admin: admin, book: book })
+      sheriff.create
+      expect(AuditBook.count).to eq(0)
     end
   end
 end
