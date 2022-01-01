@@ -3,6 +3,7 @@ class BooksController < ApplicationController
   before_action :present_book, only: [:show, :update, :publish, :unpublish]
   before_action :set_book, only: [:edit]
   before_action :build_book, only: [:create]
+  before_action :call_book_sheriff, only: [:update]
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
@@ -32,6 +33,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(books_params)
+      @book_sheriff.create
       redirect_to book_path(@book), notice: 'The Book was updated!'
     else
       render :edit
@@ -61,6 +63,10 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def call_book_sheriff
+    @book_sheriff = Audit::BookSheriff.new(books_params, { admin: current_admin, book: @book })
+  end
 
   def books_params
     params.require(:book).permit(:title, :price, :quantity)
