@@ -1,12 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Audit::BookSheriff do
-  subject(:module_audit_book) {
-    described_class.new(attributes_with_new_title,
+  subject(:module_audit_book_only_price) {
+    described_class.new(only_change_price_attribute,
                         { admin: admin, book: book })
   }
 
+  let(:module_audit_book) {
+    described_class.new(attributes_with_new_title,
+                        { admin: admin, book: book })
+  }
   let!(:attributes_with_new_title) { { title: 'another title', price: book.price, quantity: 1 } }
+  let!(:only_change_price_attribute) { { title: book.title, price: 233, quantity: book.quantity } }
   let(:admin) { create(:admin) }
   let(:book) { create(:book) }
 
@@ -56,6 +61,24 @@ RSpec.describe Audit::BookSheriff do
 
     it 'has nil quantity' do
       expect(AuditBook.last.quantity).to eq(1)
+    end
+  end
+
+  context 'when change only price' do
+    before do
+      module_audit_book_only_price.create
+    end
+
+    it 'has title' do
+      expect(AuditBook.last.title).to be_nil
+    end
+
+    it 'has nil price' do
+      expect(AuditBook.last.price).to eq(233)
+    end
+
+    it 'has nil quantity' do
+      expect(AuditBook.last.quantity).to be_nil
     end
   end
 end
