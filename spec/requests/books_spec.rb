@@ -130,6 +130,13 @@ RSpec.describe '/books', type: :request do
         patch book_url(book), params: { book: invalid_attributes }
         expect(response).to render_template(:edit)
       end
+
+      it 'does not create audit book' do
+        book = Book.create! valid_attributes
+        expect {
+          patch book_url(book), params: { book: invalid_attributes }
+        }.to change(AuditBook, :count).by(0)
+      end
     end
   end
 
