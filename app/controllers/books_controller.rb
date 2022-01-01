@@ -42,7 +42,7 @@ class BooksController < ApplicationController
   end
 
   def publish
-    @book_sheriff = Audit::BookSheriff.new({ title: nil, quantity: nil, price: nil, published: 'published' },
+    @book_sheriff = Audit::BookSheriff.new(published_params_to_book_sheriff,
                                            { admin: current_admin, book: @book })
     @book.published!
     redirect_to book_path(@book), notice: 'Book published!'
@@ -66,6 +66,10 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def published_params_to_book_sheriff
+    { title: nil, quantity: nil, price: nil, published: 'published' }
+  end
 
   def call_book_sheriff
     @book_sheriff = Audit::BookSheriff.new(books_params, { admin: current_admin, book: @book })
