@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:edit]
   before_action :build_book, only: [:create]
   before_action :call_book_sheriff, only: [:update]
-  after_action :create_audit_book, only: [:update, :publish]
+  after_action :create_audit_book, only: [:update, :publish, :unpublish]
 
   def index
     @books = Book.published.map { |book| BooksPresenter.new(book) }
@@ -49,6 +49,8 @@ class BooksController < ApplicationController
   end
 
   def unpublish
+    @book_sheriff = Audit::BookSheriff.new(unpublished_params_to_book_sheriff,
+                                           { admin: current_admin, book: @book })
     @book.unpublished!
     redirect_to book_path(@book), notice: 'Book unpublished!'
   end
@@ -68,7 +70,11 @@ class BooksController < ApplicationController
   private
 
   def published_params_to_book_sheriff
-    { title: nil, quantity: nil, price: nil, published: 'published' }
+    { title: nil, quantity: nil, price: nil, published: true }
+  end
+
+  def unpublished_params_to_book_sheriff
+    { title: nil, quantity: nil, price: nil, published: false }
   end
 
   def call_book_sheriff
