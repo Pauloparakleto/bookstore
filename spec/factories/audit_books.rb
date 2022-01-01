@@ -5,5 +5,6 @@ FactoryBot.define do
     title { Faker::Book.title }
     quantity { 1 }
     price { '9.99' }
+    published { false }
   end
 end
