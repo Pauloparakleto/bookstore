@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe '/books', type: :request do
-  # TODO, publish and unpublished a book.
-  # TODO, add author to a book.
   let!(:admin) { create(:admin) }
   let(:valid_attributes) { FactoryBot.attributes_for(:book) }
   let(:invalid_attributes) {
@@ -74,13 +72,55 @@ RSpec.describe '/books', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:book) }
+      let(:new_attributes) { FactoryBot.attributes_for(:book, quantity: 1) }
 
       it 'redirects to the book' do
         book = Book.create! valid_attributes
         patch book_url(book), params: { book: new_attributes }
         book.reload
         expect(response).to redirect_to(book_url(book))
+      end
+
+      it 'creates audit book' do
+        book = Book.create! valid_attributes
+        expect {
+          patch book_url(book), params: { book: new_attributes }
+        }.to change(AuditBook, :count).by(1)
+      end
+
+      it 'blames current admin audit book' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.admin).to eq(admin)
+      end
+
+      it 'registers changes on book' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.book).to eq(book)
+      end
+
+      it 'registers changes on book title' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.title).to eq(new_attributes.fetch(:title))
+      end
+
+      it 'registers changes on book quantity' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.quantity).to eq(new_attributes.fetch(:quantity))
+      end
+
+      it 'registers changes on book price' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price))
       end
     end
 
@@ -89,6 +129,13 @@ RSpec.describe '/books', type: :request do
         book = Book.create! valid_attributes
         patch book_url(book), params: { book: invalid_attributes }
         expect(response).to render_template(:edit)
+      end
+
+      it 'does not create audit book' do
+        book = Book.create! valid_attributes
+        expect {
+          patch book_url(book), params: { book: invalid_attributes }
+        }.to change(AuditBook, :count).by(0)
       end
     end
   end
@@ -105,6 +152,22 @@ RSpec.describe '/books', type: :request do
       end
 
       it 'book publish!' do
+        book = Book.create! valid_attributes
+
+        patch publish_book_path(book)
+
+        expect(AuditBook.last.published).to eq('published')
+      end
+
+      it 'has book quantity nil!' do
+        book = Book.create! valid_attributes
+
+        patch publish_book_path(book)
+
+        expect(AuditBook.last.quantity).to be_nil
+      end
+
+      it 'book published!' do
         book = Book.create! valid_attributes
         book.unpublished!
         patch publish_book_path(book)
@@ -133,8 +196,31 @@ RSpec.describe '/books', type: :request do
 
       it 'book unpublish!' do
         book = Book.create! valid_attributes
+        book.published!
+
         patch unpublish_book_path(book)
+
         expect(book.reload.published?).to eq(false)
+      end
+
+      it 'book unpublished!' do
+        book = Book.create! valid_attributes
+        book.published!
+        book.reload
+
+        patch unpublish_book_path(book)
+
+        expect(AuditBook.last.published).to eq('unpublished')
+      end
+
+      it 'has book quantity nil!' do
+        book = Book.create! valid_attributes
+
+        book.published!
+
+        patch unpublish_book_path(book)
+
+        expect(AuditBook.last.quantity).to be_nil
       end
     end
 

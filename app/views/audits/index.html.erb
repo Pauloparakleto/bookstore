@@ -1,0 +1,33 @@
+<section class='container'>
+  <h1>Audit Book</h1>
+</section>
+<section class='container'>
+  <p class='grey-text'>Every update on books will record the admin, book and what was changed.
+   Empty fields means the respective peace of information didn't change.</p>
+</section>
+<section class='container'>
+  <table>
+    <thead>
+    <tr>
+      <th>Admin Email</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Published</th>
+      <th>Quantity</th>
+      <th>Current title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @audit_books.each do |audit_book| %>
+      <tr>
+        <td> <%= audit_book.admin.email %> </td>
+        <td> <%= audit_book.title %> </td>
+        <td> <%= audit_book.price %> </td>     
+        <td> <%= audit_book.published %> </td> 
+        <td> <%= audit_book.quantity %> </td> 
+        <td> <%= link_to audit_book.book.title, book_path(audit_book.book.id) %> </td> 
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</section>

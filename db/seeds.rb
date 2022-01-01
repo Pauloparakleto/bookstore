@@ -18,7 +18,7 @@ FactoryBot.create(:user, email: 'blocked@gmail.com', password: '123456', blocked
 
 # Module Admin
 puts 'Creating Admin'
-FactoryBot.create(:admin, email: 'adm@bookstore.com', password: '123456')
+admin = FactoryBot.create(:admin, email: 'adm@bookstore.com', password: '123456')
 
 # Module Orders
 puts 'Creating Orders...'
@@ -26,3 +26,7 @@ first_item = FactoryBot.create(:item, quantity: 2, book: Book.first)
 second_item = FactoryBot.create(:item, quantity: 3, book: Book.second)
 FactoryBot.create(:order, items: [first_item], user: users.first)
 FactoryBot.create(:order, items: [second_item], user: users.first)
+
+# Module Audit Books
+puts 'Creating Audit Books'
+FactoryBot.create_list(:audit_book, 4, admin: admin, book: Book.first)
