@@ -15,8 +15,24 @@ RSpec.describe Audit::BookSheriff do
       expect(module_audit_book).to be_truthy
     end
 
-    it 'returns only new title and quantity' do
-      expect(module_audit_book.check_difference).to eq({ title: 'another title', quantity: 1 })
+    it 'select book attributes' do
+      expect(module_audit_book.book_attributes_to_compare).to eq({ title: book.title, quantity: book.quantity,
+                                                                   price: book.price })
+    end
+
+    it 'returns new title' do
+      module_audit_book.set_title_difference
+      expect(module_audit_book.title).to eq('another title')
+    end
+
+    it 'returns new quantity' do
+      module_audit_book.set_quantity_difference
+      expect(module_audit_book.quantity).to eq(1)
+    end
+
+    it 'returns price nil' do
+      module_audit_book.set_price_difference
+      expect(module_audit_book.price).to be_nil
     end
 
     it 'returns the admin' do
