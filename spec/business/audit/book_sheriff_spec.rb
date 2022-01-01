@@ -87,4 +87,18 @@ RSpec.describe Audit::BookSheriff do
       expect(AuditBook.last.quantity).to be_nil
     end
   end
+
+  context 'when unpublished!' do
+    before do
+      book.published!
+      book.reload
+    end
+
+    it 'has published false' do
+      sheriff = described_class.new({ title: nil, quantity: nil, price: nil, published: false },
+                                    { admin: admin, book: book })
+      sheriff.create
+      expect(AuditBook.last.published).to eq(false)
+    end
+  end
 end
