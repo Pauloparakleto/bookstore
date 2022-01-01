@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe '/books', type: :request do
-  # TODO, publish and unpublished a book.
-  # TODO, add author to a book.
   let!(:admin) { create(:admin) }
   let(:valid_attributes) { FactoryBot.attributes_for(:book) }
   let(:invalid_attributes) {
@@ -81,6 +79,48 @@ RSpec.describe '/books', type: :request do
         patch book_url(book), params: { book: new_attributes }
         book.reload
         expect(response).to redirect_to(book_url(book))
+      end
+
+      it 'creates audit book' do
+        book = Book.create! valid_attributes
+        expect {
+          patch book_url(book), params: { book: new_attributes }
+        }.to change(AuditBook, :count).by(1)
+      end
+
+      it 'blames current admin audit book' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.admin).to eq(admin)
+      end
+
+      it 'registers changes on book' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.book).to eq(book)
+      end
+
+      it 'registers changes on book title' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.title).to eq(new_attributes.fetch(:title))
+      end
+
+      it 'registers changes on book quantity' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.quantity).to eq(new_attributes.fetch(:quantity))
+      end
+
+      it 'registers changes on book price' do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        book.reload
+        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price))
       end
     end
 
