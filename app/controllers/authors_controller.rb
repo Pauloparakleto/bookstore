@@ -2,6 +2,8 @@ class AuthorsController < ApplicationController
   before_action :authenticate_admin!
   before_action :build_author, only: :create
   before_action :set_author, only: [:edit, :update, :show]
+  before_action :call_author_sheriff, only: [:update]
+  after_action :create_author_sheriff, only: [:update]
 
   def index
     @authors = Author.all.map { |author| AuthorsPresenter.new(author) }
@@ -57,5 +59,15 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
     @books = @author.books.map { |book| BooksPresenter.new(book) }
     @author
+  end
+
+  def call_author_sheriff
+    @author_sheriff = Audit::AuthorSheriff.new(authors_params, { admin: current_admin, author: @author })
+  end
+
+  def create_author_sheriff
+    return unless @author.valid?
+
+    @author_sheriff.create
   end
 end

@@ -72,13 +72,39 @@ RSpec.describe '/authors', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:author) }
+      let(:new_attributes) { FactoryBot.attributes_for(:author, first_name: 'another name') }
+      let(:author) { Author.create! valid_attributes }
 
-      it 'redirects to the author' do
-        author = Author.create! valid_attributes
+      before do
         patch author_url(author), params: { author: new_attributes }
         author.reload
+      end
+
+      it 'redirects to the author' do
         expect(response).to redirect_to(author_url(author))
+      end
+
+      it 'creates audit author' do
+        author = Author.create! valid_attributes
+        expect {
+          patch author_url(author), params: { author: new_attributes }
+        }.to change(AuditAuthor, :count).by(1)
+      end
+
+      it 'blames current admin audit author' do
+        expect(AuditAuthor.last.admin).to eq(admin)
+      end
+
+      it 'registers changes on author' do
+        expect(AuditAuthor.last.author).to eq(author)
+      end
+
+      it 'registers changes on author first name' do
+        expect(AuditAuthor.last.first_name).to eq(new_attributes.fetch(:first_name))
+      end
+
+      it 'registers changes on author last name' do
+        expect(AuditAuthor.last.last_name).to eq(new_attributes.fetch(:last_name))
       end
     end
 

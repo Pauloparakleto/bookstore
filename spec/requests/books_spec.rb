@@ -73,11 +73,14 @@ RSpec.describe '/books', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) { FactoryBot.attributes_for(:book, quantity: 1) }
+      let(:book){Book.create! valid_attributes}
 
-      it 'redirects to the book' do
-        book = Book.create! valid_attributes
+      before do
         patch book_url(book), params: { book: new_attributes }
         book.reload
+      end
+
+      it 'redirects to the book' do
         expect(response).to redirect_to(book_url(book))
       end
 
@@ -89,38 +92,23 @@ RSpec.describe '/books', type: :request do
       end
 
       it 'blames current admin audit book' do
-        book = Book.create! valid_attributes
-        patch book_url(book), params: { book: new_attributes }
-        book.reload
         expect(AuditBook.last.admin).to eq(admin)
       end
 
       it 'registers changes on book' do
-        book = Book.create! valid_attributes
-        patch book_url(book), params: { book: new_attributes }
-        book.reload
         expect(AuditBook.last.book).to eq(book)
       end
 
       it 'registers changes on book title' do
-        book = Book.create! valid_attributes
-        patch book_url(book), params: { book: new_attributes }
-        book.reload
         expect(AuditBook.last.title).to eq(new_attributes.fetch(:title))
       end
 
       it 'registers changes on book quantity' do
-        book = Book.create! valid_attributes
-        patch book_url(book), params: { book: new_attributes }
-        book.reload
         expect(AuditBook.last.quantity).to eq(new_attributes.fetch(:quantity))
       end
 
       it 'registers changes on book price' do
-        book = Book.create! valid_attributes
-        patch book_url(book), params: { book: new_attributes }
-        book.reload
-        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price))
+        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price).to_d)
       end
     end
 
@@ -142,7 +130,7 @@ RSpec.describe '/books', type: :request do
 
   describe 'PATCH /publish' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:book) }
+      let(:new_attributes) { FactoryBot.attributes_for(:book, price: 2333.34) }
 
       it 'redirects to the book' do
         book = Book.create! valid_attributes

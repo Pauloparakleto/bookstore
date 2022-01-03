@@ -53,6 +53,8 @@ module Users
     end
 
     def add_book_to_order
+      # TODO, move it to a class method
+      # TODO, add de possiblitity of changing the quantity
       books_in_the_shopping_cart.each do |book_id|
         book = Book.find(book_id)
         @order.items.build({ name: book.title, price: book.price,

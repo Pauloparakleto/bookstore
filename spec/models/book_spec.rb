@@ -39,7 +39,7 @@ RSpec.describe Book, type: :model do
       end
 
       it 'has price' do
-        expect(book.price).to eq(price)
+        expect(book.price).to eq(price.to_d)
       end
 
       it 'has published' do
@@ -130,7 +130,7 @@ RSpec.describe Book, type: :model do
       it 'changes author first name' do
         author_first_name = book.authors.first.first_name
         author_id = book.authors.first.id
-        book.authors.find(author_id).update(first_name: Faker::Book.author.first)
+        book.authors.find(author_id).update(first_name: 'another first name')
 
         expect(book.authors.reload.first.first_name).not_to eq(author_first_name)
       end
@@ -138,7 +138,7 @@ RSpec.describe Book, type: :model do
       it 'changes author last name' do
         author_last_name = book.authors.first.first_name
         author_id = book.authors.first.id
-        book.authors.find(author_id).update(last_name: Faker::Book.author.first)
+        book.authors.find(author_id).update(last_name: 'Another last name')
 
         expect(book.authors.reload.first.last_name).not_to eq(author_last_name)
       end
