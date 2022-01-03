@@ -130,7 +130,7 @@ RSpec.describe '/books', type: :request do
 
   describe 'PATCH /publish' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:book) }
+      let(:new_attributes) { FactoryBot.attributes_for(:book, price: 2333.34) }
 
       it 'redirects to the book' do
         book = Book.create! valid_attributes
