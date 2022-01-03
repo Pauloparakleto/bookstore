@@ -30,3 +30,7 @@ FactoryBot.create(:order, items: [second_item], user: users.first)
 # Module Audit Books
 puts 'Creating Audit Books'
 FactoryBot.create_list(:audit_book, 4, admin: admin, book: Book.first)
+
+# Module Audit Books
+puts 'Creating Audit Authors'
+FactoryBot.create_list(:audit_author, 4, admin: admin, author: Author.first)
