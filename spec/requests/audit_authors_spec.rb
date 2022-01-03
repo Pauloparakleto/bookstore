@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'audit_authors/', type: :request do
   let!(:admin) { create(:admin) }
+  let!(:author) { create(:author) }
 
   before do
-    create(:author)
-    create_list(:audit_author, 2)
+    create_list(:audit_author, 2, admin: admin, author: author)
     sign_in admin
   end
 
