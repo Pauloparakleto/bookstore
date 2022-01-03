@@ -73,7 +73,7 @@ RSpec.describe '/books', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) { FactoryBot.attributes_for(:book, quantity: 1) }
-      let(:book){Book.create! valid_attributes}
+      let(:book) { Book.create! valid_attributes }
 
       before do
         patch book_url(book), params: { book: new_attributes }
