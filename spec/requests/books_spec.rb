@@ -108,7 +108,7 @@ RSpec.describe '/books', type: :request do
       end
 
       it 'registers changes on book price' do
-        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price))
+        expect(AuditBook.last.price).to eq(new_attributes.fetch(:price).to_d)
       end
     end
 
