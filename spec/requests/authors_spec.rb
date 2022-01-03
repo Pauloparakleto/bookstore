@@ -73,7 +73,7 @@ RSpec.describe '/authors', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) { FactoryBot.attributes_for(:author) }
-      let(:author){Author.create! valid_attributes}
+      let(:author) { Author.create! valid_attributes }
 
       before do
         patch author_url(author), params: { author: new_attributes }
@@ -98,12 +98,12 @@ RSpec.describe '/authors', type: :request do
       it 'registers changes on author' do
         expect(AuditAuthor.last.author).to eq(author)
       end
-      
+
       it 'registers changes on author first name' do
         expect(AuditAuthor.last.first_name).to eq(new_attributes.fetch(:first_name))
       end
-      
-      it 'registers changes on author first name' do
+
+      it 'registers changes on author last name' do
         expect(AuditAuthor.last.last_name).to eq(new_attributes.fetch(:last_name))
       end
     end
