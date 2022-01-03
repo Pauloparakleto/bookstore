@@ -1,12 +1,12 @@
 # Module Authors
 puts 'Creating authors...'
 first_authors = FactoryBot.create_list(:author, 2)
-second_authors = FactoryBot.create_list(:author, 2)
+second_authors = FactoryBot.create_list(:author, 4)
 
 # Module Books
 puts 'Creating Books'
 
-FactoryBot.create_list(:book, 3, published: true, authors: first_authors, quantity: 200)
+FactoryBot.create_list(:book, 10, published: true, authors: first_authors, quantity: 200)
 FactoryBot.create_list(:book, 2, published: true, authors: second_authors, quantity: 100)
 FactoryBot.create_list(:book, 2, published: false, authors: second_authors, quantity: 50)
 
@@ -29,8 +29,8 @@ FactoryBot.create(:order, items: [second_item], user: users.first)
 
 # Module Audit Books
 puts 'Creating Audit Books'
-FactoryBot.create_list(:audit_book, 4, admin: admin, book: Book.first)
+FactoryBot.create_list(:audit_book, 6, admin: admin, book: Book.first)
 
 # Module Audit Books
 puts 'Creating Audit Authors'
-FactoryBot.create_list(:audit_author, 4, admin: admin, author: Author.first)
+FactoryBot.create_list(:audit_author, 6, admin: admin, author: Author.first)
