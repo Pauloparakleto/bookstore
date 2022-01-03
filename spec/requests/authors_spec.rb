@@ -72,7 +72,7 @@ RSpec.describe '/authors', type: :request do
 
   describe 'PATCH /update' do
     context 'with valid parameters' do
-      let(:new_attributes) { FactoryBot.attributes_for(:author) }
+      let(:new_attributes) { FactoryBot.attributes_for(:author, first_name: 'another name') }
       let(:author) { Author.create! valid_attributes }
 
       before do
