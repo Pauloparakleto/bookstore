@@ -14,12 +14,10 @@ FactoryBot.create_list(:book, 2, published: false, authors: second_authors, quan
 puts 'Creating Users'
 users = FactoryBot.create_list(:user, 5)
 puts '  Blocked User'
-User.find_by_email('blocked@gmail.com').destroy
 FactoryBot.create(:user, email: 'blocked@gmail.com', password: '123456', blocked: true)
 
 # Module Admin
 puts 'Creating Admin'
-Admin.find_by_email('adm@bookstore.com').destroy
 admin = FactoryBot.create(:admin, email: 'adm@bookstore.com', password: '123456')
 
 # Module Orders
