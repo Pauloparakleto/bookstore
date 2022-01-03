@@ -1,0 +1,29 @@
+<section class='container'>
+  <h1>Audit Authors</h1>
+</section>
+<section class='container'>
+  <p class='grey-text'>Every update on authors will record the admin, author and what was changed.
+   Empty fields means the respective peace of information didn't change.</p>
+</section>
+<section class='container'>
+  <table>
+    <thead>
+    <tr>
+      <th>Admin Email</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Current First Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @audit_authors.each do |audit_author| %>
+      <tr>
+        <td> <%= audit_author.admin.email %> </td>
+        <td> <%= audit_author.first_name %> </td>
+        <td> <%= audit_author.last_name %> </td>     
+        <td> <%= link_to audit_author.author.first_name, author_path(audit_author.author.id) %> </td> 
+      </tr>
+      </tbody>
+    <% end %>
+    </table>
+</section>
