@@ -54,4 +54,6 @@ Rails.application.routes.draw do
   end
 
   resources :audits, only: [:index]
+  
+  resources :audit_authors, only: [:index]
 end
