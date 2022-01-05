@@ -4,9 +4,9 @@ module Users
     before_action :build_order, only: :create
 
     def cart
-      @order = Order.new
-      add_book_to_order
-      @order
+      shoppin_cart = ShoppingCart.new(books_in_the_shopping_cart)
+      shoppin_cart.build_order
+      @order = shoppin_cart.order
     end
 
     def show
@@ -22,8 +22,6 @@ module Users
     end
 
     def add_book
-      return if session[:book_ids].any? params[:book][:id]
-
       session[:book_ids] << params[:book][:id]
       redirect_to users_books_path
     end
@@ -50,16 +48,6 @@ module Users
 
     def books_in_the_shopping_cart
       session[:book_ids]
-    end
-
-    def add_book_to_order
-      # TODO, move it to a class method
-      # TODO, add de possiblitity of changing the quantity
-      books_in_the_shopping_cart.each do |book_id|
-        book = Book.find(book_id)
-        @order.items.build({ name: book.title, price: book.price,
-                             quantity: 1, book_id: book_id })
-      end
     end
   end
 end
