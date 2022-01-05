@@ -2,6 +2,9 @@
 
 ## [Live Demo](bookstorefox.herokuapp.com/)
 
+![Screenshot from 2022-01-05 10-29-27](https://user-images.githubusercontent.com/52010485/148225415-5071f763-a171-4de0-bd05-ce7b529112fb.png)
+
+
 The admin email: adm@bookstore.com and password: 123456
 
 The blocked user email: blocked@gmail.com and password: 123456
