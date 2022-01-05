@@ -1,13 +1,12 @@
 # BOOK STORE FOX
 
 ## [Live Demo](bookstorefox.herokuapp.com/)
-
-![Screenshot from 2022-01-05 10-29-27](https://user-images.githubusercontent.com/52010485/148225415-5071f763-a171-4de0-bd05-ce7b529112fb.png)
-
-
 The admin email: adm@bookstore.com and password: 123456
 
 The blocked user email: blocked@gmail.com and password: 123456
+## [Author Explanation Video](https://youtu.be/BVQxNfDQxpw)
+
+![Screenshot from 2022-01-05 10-29-27](https://user-images.githubusercontent.com/52010485/148225415-5071f763-a171-4de0-bd05-ce7b529112fb.png)
 
 ## Coverage
 ![Screenshot from 2022-01-03 13-05-28](https://user-images.githubusercontent.com/52010485/147952770-6dc9b293-8b60-4ad2-8c8c-db53affa5dac.png)
