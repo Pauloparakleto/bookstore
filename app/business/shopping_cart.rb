@@ -5,18 +5,23 @@ class ShoppingCart
     def initialize(array_of_ids)
         @book_ids = array_of_ids
         @book_unique_ids = book_ids.uniq
+        @order = Order.new
     end
 
     def build_order
-        @order = Order.new
-        book_quantity_to_hash.each do |id, quantity|
-            
+        set_quantity
+        book_quantity_to_hash
+        add_items_to_order
+    end
 
+    private
+
+    def add_items_to_order
+        book_quantity_to_hash.each do |id, quantity|
             book = Book.find(id)
             quantity = get_quantity(id)
             order.items.build(name: book.title, price: book.price, quantity: quantity, book_id: id)
         end
-        order
     end
 
     def set_quantity
