@@ -12,6 +12,7 @@ class ShoppingCart
         set_quantity
         book_quantity_to_hash
         add_items_to_order
+        order
     end
 
     private
