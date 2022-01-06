@@ -2,7 +2,7 @@ module Users
   class BooksController < Users::UsersController
     before_action :authenticate_user!, if: :check_admin?
     def index
-      @books = Book.published.map { |book| BooksPresenter.new(book) }
+      @books = Book.published.order('title ASC').map { |book| BooksPresenter.new(book) }
     end
 
     def show

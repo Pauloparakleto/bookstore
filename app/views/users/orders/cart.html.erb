@@ -45,9 +45,12 @@
       <p>Total(<%= @order.items.size %> item(s)): <%= number_to_currency @order.total unless @order.total.zero? %> </p>
     </section>
 
-    <div class="waves-effect waves-light btn">
-      <%= form.submit class: 'white-text' if @order.items.present? %>
-    </div>
+    <% if @order.items.present? %>
+      <div class="waves-effect waves-light btn">
+       <%= form.submit class: 'white-text' if @order.items.present? %>
+      </div>
+    <% end %>
+   
   <% end %>
 </section>
 
