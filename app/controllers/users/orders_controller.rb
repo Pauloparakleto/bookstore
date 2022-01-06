@@ -1,12 +1,11 @@
 module Users
   class OrdersController < Users::UsersController
     before_action :new_book_session, except: [:create]
-    before_action :build_order, only: :create
+    before_action :build_order, only: [:cart]
+    before_action :set_current_user_order_attributes, only: :create
 
     def cart
-      shoppin_cart = ShoppingCart.new(books_in_the_shopping_cart)
-      shoppin_cart.build_order
-      @order = shoppin_cart.order
+      @order
     end
 
     def show
@@ -33,9 +32,15 @@ module Users
 
     private
 
-    def build_order
+    def set_current_user_order_attributes
       session[:book_ids] = []
       @order = current_user.orders.build(order_params)
+    end
+
+    def build_order
+      shoppin_cart = ShoppingCart.new(books_in_the_shopping_cart)
+      shoppin_cart.build_order
+      @order = shoppin_cart.order
     end
 
     def new_book_session
