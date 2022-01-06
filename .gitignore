@@ -42,3 +42,6 @@ yarn-debug.log*
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+
+# Ignore coverage
+/coverage

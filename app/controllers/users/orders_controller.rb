@@ -1,11 +1,10 @@
 module Users
   class OrdersController < Users::UsersController
     before_action :new_book_session, except: [:create]
-    before_action :build_order, only: :create
+    before_action :build_order, only: [:cart]
+    before_action :set_current_user_order_attributes, only: :create
 
     def cart
-      @order = Order.new
-      add_book_to_order
       @order
     end
 
@@ -22,8 +21,6 @@ module Users
     end
 
     def add_book
-      return if session[:book_ids].any? params[:book][:id]
-
       session[:book_ids] << params[:book][:id]
       redirect_to users_books_path
     end
@@ -35,9 +32,15 @@ module Users
 
     private
 
-    def build_order
+    def set_current_user_order_attributes
       session[:book_ids] = []
       @order = current_user.orders.build(order_params)
+    end
+
+    def build_order
+      shoppin_cart = ShoppingCart.new(books_in_the_shopping_cart)
+      shoppin_cart.build_order
+      @order = shoppin_cart.order
     end
 
     def new_book_session
@@ -50,16 +53,6 @@ module Users
 
     def books_in_the_shopping_cart
       session[:book_ids]
-    end
-
-    def add_book_to_order
-      # TODO, move it to a class method
-      # TODO, add de possiblitity of changing the quantity
-      books_in_the_shopping_cart.each do |book_id|
-        book = Book.find(book_id)
-        @order.items.build({ name: book.title, price: book.price,
-                             quantity: 1, book_id: book_id })
-      end
     end
   end
 end
